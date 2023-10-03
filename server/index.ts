@@ -24,11 +24,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 io.on('connection', (socket) => {
-  console.log(socket.id) // x8WIv7-mJelg7on_ALbx
-})
+  // console.log(socket.id) // Display user's socket ID when they connect
+  console.log(`${socket.id} connected`) // Display a message when a user connects
 
-io.on('connection', (socket) => {
-  console.log('a user connected')
+  socket.on('disconnect', () => {
+    console.log(`${socket.id} disconnected`) // Display a message when a user disconnects
+  })
 })
 
 export default server
