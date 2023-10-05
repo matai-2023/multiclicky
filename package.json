@@ -47,6 +47,8 @@
     "react-explode": "^2.0.5",
     "react-toggle-dark-mode": "^1.1.1",
     "sinon": "^16.0.0",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
     "sqlite3": "^5.1.6",
     "update-dotenv": "^1.1.1",
     "use-sound": "^4.0.1",
@@ -103,7 +105,7 @@
     "singleQuote": true
   },
   "browserslist": "> 2%, not dead",
-  "engines" : { 
-    "node" : ">=16.0.0" 
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
