@@ -8,7 +8,7 @@ socket.on('connect', () => {
 })
 
 socket.on('disconnect', () => {
-  console.log('Disconnected')
+  console.log('Disconnected', socket.id)
 })
 
 function App() {
