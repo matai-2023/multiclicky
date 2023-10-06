@@ -87,16 +87,20 @@ function useGame() {
     e.preventDefault()
     const form = new FormData(e.currentTarget)
     const input = form.get('nickname')?.valueOf() as string
-    const oppInput = form.get('opponent')?.valueOf() as string
+    // const oppInput = form.get('opponent')?.valueOf() as string
     socket.emit('newPlayer', {
       id: socket.id,
       nickname: input,
-      opponent: oppInput,
+      // opponent: oppInput,
     })
-    socket.emit('findOpponent', {
-      id: socket.id,
-      nickname: input,
-      opponent: oppInput,
+    // socket.emit('findOpponent', {
+    //   id: socket.id,
+    //   nickname: input,
+    //   opponent: oppInput,
+    // })
+    socket.on('find', (e) => {
+      setOpponent(e.allplayers[0].opponent)
+      console.log(e)
     })
     setStart(true)
   }

@@ -40,11 +40,15 @@ function Game(props: Props) {
             onSubmit={clicks.handleStartClick}
           >
             <input name="nickname" placeholder="Enter your nickname"></input>
-            <input name="opponent" placeholder="Enter your opponent"></input>
+            {/* <input name="opponent" placeholder="Enter your opponent"></input> */}
             <button className="border-4 rounded text-5xl font-bold text-primary border-primary px-48 py-24 hover:bg-pink2 hover:text-pink3 hover:animate-pulse">
               Start
             </button>
           </form>
+        ) : states.opponent.state === '' ? (
+          <>
+            <img src="/images/loading.gif" alt="loading" />
+          </>
         ) : (
           <>
             <div className="flex justify-center p-2 m-4 items-center text-3xl">
@@ -55,7 +59,7 @@ function Game(props: Props) {
                 Go Back
               </Link>
               <h2 className="ml-auto" data-testid="oppName">
-                Score: {states.opponent.state}
+                Opponent: {states.opponent.state}
               </h2>
               <h2 className="text-center flex-grow">
                 Time: {states.num.state}
