@@ -40,6 +40,7 @@ function Game(props: Props) {
             onSubmit={clicks.handleStartClick}
           >
             <input name="nickname" placeholder="Enter your nickname"></input>
+            <input name="opponent" placeholder="Enter your opponent"></input>
             <button className="border-4 rounded text-5xl font-bold text-primary border-primary px-48 py-24 hover:bg-pink2 hover:text-pink3 hover:animate-pulse">
               Start
             </button>

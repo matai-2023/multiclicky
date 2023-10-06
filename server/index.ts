@@ -36,6 +36,10 @@ io.on('connection', (socket) => {
     players.push(data)
     console.log(players)
   })
+  socket.on('findOpponent', (data) => {
+    const opponent = players.find((value) => value.nickname == data.opponent)
+    console.log(opponent)
+  })
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`) // Display a message when a user disconnects
   })
