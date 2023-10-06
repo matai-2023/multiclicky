@@ -10,7 +10,7 @@ import { motion } from 'framer-motion'
 import AddScoreButton from './AddScoreButton'
 import GameHeader from './GameHeader'
 import { Socket } from 'socket.io-client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   socket: Socket
@@ -18,9 +18,8 @@ interface Props {
 function Game(props: Props) {
   const socket = props.socket
   const { states, effects, clicks, audio } = useGame()
-  useEffect(() => {
-    socket.emit('banana', { id: socket.id })
-  }, [])
+  const [playerName, setPlayerName] = useState('')
+
   return (
     <>
       <motion.div
@@ -36,14 +35,15 @@ function Game(props: Props) {
           </audio>
         </div>
         {!states.start.state ? (
-          <div className="flex justify-center items-center h-screen">
-            <button
-              className="border-4 rounded text-5xl font-bold text-primary border-primary px-48 py-24 hover:bg-pink2 hover:text-pink3 hover:animate-pulse"
-              onClick={clicks.handleStartClick}
-            >
+          <form
+            className="flex justify-center items-center h-screen"
+            onSubmit={clicks.handleStartClick}
+          >
+            <input name="nickname" placeholder="Enter your nickname"></input>
+            <button className="border-4 rounded text-5xl font-bold text-primary border-primary px-48 py-24 hover:bg-pink2 hover:text-pink3 hover:animate-pulse">
               Start
             </button>
-          </div>
+          </form>
         ) : (
           <>
             <div className="flex justify-center p-2 m-4 items-center text-3xl">

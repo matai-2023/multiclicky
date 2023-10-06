@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import * as coord from '../functions/coordinatefunctions'
+import { socket } from '../App'
 
 function useGame() {
   const [screenSize, setScreenSize] = useState(coord.getCurrentDimension)
@@ -75,8 +76,12 @@ function useGame() {
     }, 250)
   }
 
-  function handleStartClick(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleStartClick(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const form = new FormData(e.currentTarget)
+    const input = form.get('nickname')?.valueOf() as string
+    console.log(input)
+    socket.emit('newPlayer', { id: socket.id, nickname: input })
     setStart(true)
   }
 

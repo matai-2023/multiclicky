@@ -10,6 +10,11 @@ const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer, {})
 
+interface playerData {
+  id: string
+  nickname: string
+}
+const players = [] as playerData[]
 httpServer.listen(3000)
 
 server.use(express.json())
@@ -27,9 +32,9 @@ io.on('connection', (socket) => {
   // console.log(socket.id) // Display user's socket ID when they connect
   console.log(`${socket.id} connected`) // Display a message when a user connects
 
-  socket.on('banana', (data) => {
-    console.log(`bananaed`)
-    console.log(data)
+  socket.on('newPlayer', (data) => {
+    players.push(data)
+    console.log(players)
   })
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`) // Display a message when a user disconnects
