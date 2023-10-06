@@ -12,6 +12,7 @@ const io = new Server(httpServer, {})
 interface playerData {
   id: string
   nickname: string
+  opponent: string
 }
 const players = [] as playerData[]
 
@@ -33,11 +34,14 @@ io.on('connection', (socket) => {
 
   socket.on('newPlayer', (data) => {
     players.push(data)
-    console.log(players)
   })
   socket.on('findOpponent', (data) => {
-    const opponent = players.find((value) => value.nickname == data.opponent)
-    console.log(opponent)
+    players.forEach((value, index) => {
+      if (value.nickname == data.opponent) {
+        players[index].opponent = data.nickname
+      }
+    })
+    console.log(players)
   })
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`) // Display a message when a user disconnects
