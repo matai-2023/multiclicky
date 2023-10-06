@@ -14,7 +14,7 @@ socket.on('disconnect', () => {
 function App() {
   return (
     <>
-      <AnimatedRoutes />
+      <AnimatedRoutes socket={socket} />
     </>
   )
 }

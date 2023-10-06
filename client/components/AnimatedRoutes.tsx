@@ -10,15 +10,20 @@ import ShrinkyGame from './ShrinkyGame'
 import AddNickname from './AddNickname'
 import MoveyGame from './MoveyGame'
 import PainGame from './PainGame'
+import { Socket } from 'socket.io-client'
 
-function AnimatedRoutes() {
+interface Props {
+  socket: Socket
+}
+function AnimatedRoutes(props: Props) {
+  const socket = props.socket
   const location = useLocation()
   return (
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/category" element={<Category />} />
-        <Route path="/clicky" element={<Game />} />
+        <Route path="/clicky" element={<Game socket={socket} />} />
         <Route path="/bounce" element={<BounceGame />} />
         <Route path="/shrinky" element={<ShrinkyGame />} />
         <Route path="/movey" element={<MoveyGame />} />

@@ -9,9 +9,18 @@ import useGame from './hooks/useGame'
 import { motion } from 'framer-motion'
 import AddScoreButton from './AddScoreButton'
 import GameHeader from './GameHeader'
+import { Socket } from 'socket.io-client'
+import { useEffect } from 'react'
 
-function Game() {
+interface Props {
+  socket: Socket
+}
+function Game(props: Props) {
+  const socket = props.socket
   const { states, effects, clicks, audio } = useGame()
+  useEffect(() => {
+    socket.emit('banana', { id: socket.id })
+  }, [])
   return (
     <>
       <motion.div

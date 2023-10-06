@@ -27,6 +27,10 @@ io.on('connection', (socket) => {
   // console.log(socket.id) // Display user's socket ID when they connect
   console.log(`${socket.id} connected`) // Display a message when a user connects
 
+  socket.on('banana', (data) => {
+    console.log(`bananaed`)
+    console.log(data)
+  })
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`) // Display a message when a user disconnects
   })
