@@ -9,16 +9,15 @@ import { Server } from 'socket.io'
 const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer, {})
-
 interface playerData {
   id: string
   nickname: string
 }
 const players = [] as playerData[]
+
 httpServer.listen(3000)
 
 server.use(express.json())
-
 server.use(express.static(Path.resolve('public')))
 
 if (process.env.NODE_ENV === 'production') {
