@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
       }
     })
     console.log(players)
+    socket.emit('players', players)
   })
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`) // Display a message when a user disconnects

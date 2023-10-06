@@ -15,7 +15,14 @@ function useGame() {
   const [explosionPosition, setExplosionPosition] = useState([0, 0])
   const [shapeSize, setShapeSize] = useState(20)
   const [move, setMove] = useState(false)
+  const [oppName, setOpponent] = useState('')
   const intervalRef = useRef()
+
+  socket.on('players', (data) => {
+    const opponent = data.find((value) => value.id == socket.id).opponent
+    console.log(opponent)
+    setOpponent(opponent)
+  })
 
   const decreaseScore = () => setShapeScore((prev) => prev - 1)
 
@@ -81,7 +88,6 @@ function useGame() {
     const form = new FormData(e.currentTarget)
     const input = form.get('nickname')?.valueOf() as string
     const oppInput = form.get('opponent')?.valueOf() as string
-    console.log(input)
     socket.emit('newPlayer', {
       id: socket.id,
       nickname: input,
@@ -148,6 +154,7 @@ function useGame() {
     },
     shapeSize: { state: shapeSize, function: setShapeSize },
     move: { state: move, function: setMove },
+    opponent: { state: oppName, function: setOpponent },
   }
 
   const effects = {

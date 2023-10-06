@@ -54,6 +54,9 @@ function Game(props: Props) {
               >
                 Go Back
               </Link>
+              <h2 className="ml-auto" data-testid="oppName">
+                Score: {states.opponent.state}
+              </h2>
               <h2 className="text-center flex-grow">
                 Time: {states.num.state}
               </h2>
