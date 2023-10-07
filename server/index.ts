@@ -13,9 +13,9 @@ interface playerData {
   id: string
   nickname: string
   opponent: string
-  base: boolean
 }
 const players = [] as playerData[]
+let opponentId = ''
 
 httpServer.listen(3000)
 
@@ -40,16 +40,18 @@ io.on('connection', (socket) => {
     players.forEach((value, index) => {
       if (value.nickname == data.opponent) {
         players[index].opponent = data.nickname
-        players[index].base = false
+        opponentId = players[index].id
       }
     })
+
+    console.log(opponentId)
     console.log(players)
     io.emit('players', players)
   })
 
   socket.on('state', (data) => {
     // Broadcast the received state to all connected sockets
-    io.emit('state', data)
+    socket.broadcast.to(`${opponentId}`).emit('opponentState', data)
   })
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`) // Display a message when a user disconnects

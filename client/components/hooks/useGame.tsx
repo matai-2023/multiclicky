@@ -17,12 +17,10 @@ function useGame() {
   const [move, setMove] = useState(false)
   const [oppName, setOpponent] = useState('')
   const intervalRef = useRef()
-  const [base, setBase] = useState(true)
 
   socket.on('players', (data) => {
     const player = data.find((value) => value.id == socket.id)
     setOpponent(player.opponent)
-    setBase(player.base)
   })
 
   const decreaseScore = () => setShapeScore((prev) => prev - 1)
@@ -119,7 +117,6 @@ function useGame() {
   }
   function handleCircleClick(e: React.MouseEvent<SVGCircleElement>) {
     setCircleXY(coord.getNewXY(squareXY, triangleXY, screenSize))
-    console.log(circleXY)
     setCount(count + shapeScore)
     setShapeScore(100)
     explode(e)
@@ -173,17 +170,11 @@ function useGame() {
   const audio = { audioRef }
   const hook = { states, effects, clicks, audio }
   socket.emit('state', states)
-  useEffect(() => {
-    // Listen for state updates from the server
-    socket.on('state', (data) => {
-      !base ? (hook.states = data) : ''
-    })
+  // Listen for state updates from the server
+  socket.on('opponentState', (data) => {
+    hook.states = data
+  })
 
-    // Clean up the listener when the component unmounts
-    return () => {
-      socket.off('state')
-    }
-  }, [])
   return hook
 }
 
