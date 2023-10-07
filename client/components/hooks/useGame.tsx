@@ -17,11 +17,12 @@ function useGame() {
   const [move, setMove] = useState(false)
   const [oppName, setOpponent] = useState('')
   const intervalRef = useRef()
+  const [base, setBase] = useState(true)
 
   socket.on('players', (data) => {
-    const opponent = data.find((value) => value.id == socket.id).opponent
-    console.log(opponent)
-    setOpponent(opponent)
+    const player = data.find((value) => value.id == socket.id)
+    setOpponent(player.opponent)
+    setBase(player.base)
   })
 
   const decreaseScore = () => setShapeScore((prev) => prev - 1)
@@ -170,7 +171,20 @@ function useGame() {
     handleStartClick,
   }
   const audio = { audioRef }
-  return { states, effects, clicks, audio }
+  const hook = { states, effects, clicks, audio }
+  socket.emit('state', states)
+  useEffect(() => {
+    // Listen for state updates from the server
+    socket.on('state', (data) => {
+      !base ? (hook.states = data) : ''
+    })
+
+    // Clean up the listener when the component unmounts
+    return () => {
+      socket.off('state')
+    }
+  }, [])
+  return hook
 }
 
 export default useGame
